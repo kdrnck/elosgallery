@@ -121,11 +121,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Anıyı gösterme fonksiyonu
     function showMemory(memory) {
         memoryImage.style.opacity = '0';
+        memoryImage.style.transform = 'scale(0.95)';
         setTimeout(() => {
             memoryImage.src = memory.image;
             memoryMessage.textContent = memory.message;
             memoryDate.textContent = memory.date;
             memoryImage.style.opacity = '1';
+            memoryImage.style.transform = 'scale(1)';
         }, 300);
     }
 
@@ -237,8 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const bubble = document.createElement('div');
             bubble.className = 'shuffle-bubble';
             bubble.textContent = shuffleMessages[shuffleCount];
-            shuffleButton.style.position = 'relative';
-            shuffleButton.appendChild(bubble);
+            document.body.appendChild(bubble);
         }
         showNextMemory();
     });
