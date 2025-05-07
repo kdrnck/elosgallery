@@ -239,7 +239,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const bubble = document.createElement('div');
             bubble.className = 'shuffle-bubble';
             bubble.textContent = shuffleMessages[shuffleCount];
-            document.body.appendChild(bubble);
+            if (window.innerWidth <= 900) {
+                document.body.appendChild(bubble);
+            } else {
+                shuffleButton.appendChild(bubble);
+            }
         }
         showNextMemory();
     });
