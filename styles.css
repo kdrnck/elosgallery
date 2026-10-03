@@ -494,4 +494,79 @@ body.bg-pink {
 @keyframes bubbleIn {
     0% { opacity: 0; transform: translateY(-50%) scale(0.7); }
     100% { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+
+@keyframes explode {
+    0% { 
+        transform: scale(1) rotate(0deg); 
+        opacity: 1;
+        filter: blur(0);
+    }
+    50% { 
+        transform: scale(1.5) rotate(180deg); 
+        opacity: 0.5;
+        filter: blur(2px);
+    }
+    100% { 
+        transform: scale(2) rotate(360deg); 
+        opacity: 0;
+        filter: blur(4px);
+    }
+}
+
+@keyframes heartGrow {
+    0% { 
+        transform: translate(-50%, -50%) scale(0.1);
+        opacity: 0;
+    }
+    20% { 
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(10);
+        opacity: 0;
+    }
+}
+
+.final-heart {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20rem;
+    color: #FF69B4;
+    z-index: 9999;
+    text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+    animation: heartGrow 3s ease-in-out forwards;
+}
+
+.explode {
+    animation: explode 1s forwards;
+    pointer-events: none;
+}
+
+.hide-content {
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.particle {
+    position: fixed;
+    pointer-events: none;
+    background: #FF69B4;
+    border-radius: 50%;
+    animation: particleExplode 1s ease-out forwards;
+}
+
+@keyframes particleExplode {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
 } 

@@ -210,9 +210,62 @@ document.addEventListener('DOMContentLoaded', () => {
         3: "Lütfen bana daha fazla tıklama, elimdeki resimler biticek",
         4: "Şşhh tıklama diyorum aloo",
         5: "OLM KİME DİYOM LA NOLUR TIKLAMAYIN",
-        6: "Şakaydıııı, Fisher-Yates algoirtması ile karıştılırmış resimler içeriyorum. Elimde şuana kadar gördüğünden bi fazla resim var. Yani %50'ye geldin, iyi değerlendir"
+        6: "Şakaydıııı, Fisher-Yates algoirtması ile karıştılırmış resimler içeriyorum. Elimde şuana kadar gördüğünden bi fazla resim var. Yani %50'ye geldin, iyi değerlendir",
+        13: "❤️"
     };
     let shuffleMsgTimeout = null;
+
+    function createExplosionEffect() {
+        // Tüm içeriği gizle
+        document.querySelector('.memory-layout').classList.add('hide-content');
+        document.querySelector('.footer').classList.add('hide-content');
+        document.querySelector('.chat-btn').classList.add('hide-content');
+        
+        // Patlama efekti için elementleri oluştur
+        const elements = document.querySelectorAll('.memory-image-box, .memory-message-box, .shuffle-button');
+        elements.forEach(el => {
+            el.classList.add('explode');
+        });
+
+        // Parçacık efekti oluştur
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.width = Math.random() * 10 + 5 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.left = '50%';
+            particle.style.top = '50%';
+            
+            // Rastgele yön ve mesafe
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 200 + 100;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+            
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 1000);
+        }
+
+        // Kalp oluştur
+        setTimeout(() => {
+            const heart = document.createElement('div');
+            heart.className = 'final-heart';
+            heart.textContent = '❤️';
+            document.body.appendChild(heart);
+
+            // Arka plan rengini değiştir
+            document.body.style.background = 'linear-gradient(135deg, #FFE4E1, #FFDAB9)';
+            document.body.style.transition = 'background 1s';
+
+            // Kalp animasyonu bitince sayfayı yenile
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+        }, 500);
+    }
 
     shuffleButton.addEventListener('click', () => {
         shuffleCount++;
@@ -232,6 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }, i*120);
         }
+
         // Easter egg: buton konuşuyor (bubble olarak)
         const prevBubble = document.querySelector('.shuffle-bubble');
         if (prevBubble) prevBubble.remove();
@@ -245,6 +299,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 shuffleButton.appendChild(bubble);
             }
         }
+
+        // 13. tıklamada patlama efekti
+        if (shuffleCount === 13) {
+            createExplosionEffect();
+            return;
+        }
+
         showNextMemory();
     });
 
